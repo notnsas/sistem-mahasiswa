@@ -1,27 +1,19 @@
-import { pgTable, serial, text, boolean, integer } from "drizzle-orm/pg-core"
-import { relations } from "drizzle-orm"
-
-export const notes = pgTable("notes", {
-  id: serial("id").primaryKey(),
-  content: text("content").notNull(),
-  important: boolean("important").notNull().default(false),
-  userId: integer("user_id").notNull().references(() => users.id),
-})
+import { pgTable, serial, text, pgEnum } from "drizzle-orm/pg-core"
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),
   name: text("name").notNull(),
   passwordHash: text("password_hash").notNull().default(""),
+  token: text("token").default(""),
 })
 
-export const usersRelations = relations(users, ({ many }) => ({
-  notes: many(notes),
-}))
+export const genderEnum = pgEnum('gender', ['Male', 'Female']);
 
-export const notesRelations = relations(notes, ({ one }) => ({
-  user: one(users, {
-    fields: [notes.userId],
-    references: [users.id],
-  }),
-}))
+export const students = pgTable("students", {
+  id: serial("id").primaryKey(),
+  npm: text("npm").notNull(),
+  name: text("name").notNull(),
+  alamat: text("alamat").notNull(),
+  gender: genderEnum("gender").notNull(),
+})

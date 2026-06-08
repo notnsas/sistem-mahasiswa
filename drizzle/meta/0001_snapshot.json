@@ -1,11 +1,11 @@
 {
-  "id": "e74a7233-85bc-4d9a-b30e-639e1a734e95",
-  "prevId": "7d0d85e1-c100-42dd-9cbe-794879c68921",
+  "id": "74ad271a-ac31-4c9e-b711-40c9f29cf72f",
+  "prevId": "6d062fe8-3a00-4d52-b9bf-7b12679d6822",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.notes": {
-      "name": "notes",
+    "public.students": {
+      "name": "students",
       "schema": "",
       "columns": {
         "id": {
@@ -14,42 +14,34 @@
           "primaryKey": true,
           "notNull": true
         },
-        "content": {
-          "name": "content",
+        "npm": {
+          "name": "npm",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "important": {
-          "name": "important",
-          "type": "boolean",
+        "name": {
+          "name": "name",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true,
-          "default": false
+          "notNull": true
         },
-        "user_id": {
-          "name": "user_id",
-          "type": "integer",
+        "alamat": {
+          "name": "alamat",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
+        },
+        "gender": {
+          "name": "gender",
+          "type": "gender",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "notes_user_id_users_id_fk": {
-          "name": "notes_user_id_users_id_fk",
-          "tableFrom": "notes",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -77,6 +69,20 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "password_hash": {
+          "name": "password_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
+        "token": {
+          "name": "token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
         }
       },
       "indexes": {},
@@ -96,7 +102,16 @@
       "isRLSEnabled": false
     }
   },
-  "enums": {},
+  "enums": {
+    "public.gender": {
+      "name": "gender",
+      "schema": "public",
+      "values": [
+        "Male",
+        "Female"
+      ]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "roles": {},

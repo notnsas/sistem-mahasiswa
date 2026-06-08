@@ -1,30 +1,41 @@
-import { eq, sql } from "drizzle-orm"
-import { db } from "@/db"
-import { users, notes } from "@/db/schema"
+import { eq } from "drizzle-orm"
+import { db } from "../../db"
+import { users } from "../../db/schema"
+import { getCurrentUser } from "./session"
+import { revalidatePath } from "next/dist/server/web/spec-extension/revalidate"
 
 export const getUsers = async () => {
-  return db.select().from(users)
+  return db.query.users.findMany()
 }
 
-export const getUserWithNotes = async (id: number) => {
+// export const getUserWithBlogs = async (id: number) => {
+//   return db.query.users.findFirst({
+//     where: eq(users.id, id),
+//     with: { blogs: true },
+//   })
+// }
+
+export const getUserWithUsername = async (username: string) => {
+  return db.query.users.findFirst({
+    where: eq(users.username, username),
+  })
+}
+
+export const getUserById = async (id: number) => {
   return db.query.users.findFirst({
     where: eq(users.id, id),
-    with: { notes: true },
   })
 }
 
-export const getNotesByUserId = async (userId: number) => {
-  return db.select().from(notes).where(eq(notes.userId, userId))
-}
-
-export const addNote = async (content: string, important: boolean) => {
-  const user = await db.query.users.findFirst({
-    orderBy: sql`RANDOM()`,
-  })
-
-  if (!user) {
-    throw new Error("No users found")
-  }
-
-  await db.insert(notes).values({ content, important, userId: user.id })
+export const getUserWithReadingLists = async (username: string) => {
+  return await db.query.users.findFirst({
+    where: eq(users.username, username),
+    with: { 
+      readingLists: {
+        with : {
+          blog: true
+        }
+      }
+    },
+  });
 }

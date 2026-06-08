@@ -1,32 +1,69 @@
 "use client"
 
+import Link from "next/link"
 import { useSession, signOut } from "next-auth/react"
-import NavLink from "./NavLink"
 
 export default function NavBar() {
   const { data: session } = useSession()
 
   return (
-    <nav className="bg-gray-800 text-white px-6 py-3 flex items-center gap-4">
-      <NavLink href="/">home</NavLink>
-      <NavLink href="/notes">notes</NavLink>
-      <NavLink href="/users">users</NavLink>
-      <div className="ml-auto flex items-center gap-4">
+    <nav className="flex items-center justify-between px-6 py-3 bg-gray-900 text-white shadow-md">
+      {/* Left side */}
+      <div className="flex items-center gap-4 text-sm">
+        <Link className="hover:text-blue-400 transition" href="/">
+          Home
+        </Link>
+
+        <Link className="hover:text-blue-400 transition" href="/students">
+          Students
+        </Link>
+
+        <Link className="hover:text-blue-400 transition" href="/users">
+          Users
+        </Link>
+
+        {session && (
+          <>
+          <Link
+            className="hover:text-blue-400 transition"
+            href="/students/new"
+          >
+            Create New
+          </Link>
+          <Link
+            className="hover:text-blue-400 transition"
+            href="/me"
+          >
+            My Profile
+          </Link>
+          </>
+        )}
+      </div>
+
+      {/* Right side */}
+      <div className="flex items-center gap-4 text-sm">
         {session ? (
           <>
-            <NavLink href="/notes/new">create new</NavLink>
-            <em className="text-gray-300">{session.user?.name} logged in</em>
+            <span className="text-gray-300">
+              {session.user?.name} logged in
+            </span>
+
             <button
               onClick={() => signOut()}
-              className="bg-gray-600 hover:bg-gray-500 px-3 py-1 rounded text-sm"
+              className="px-3 py-1 rounded-md bg-red-600 hover:bg-red-500 transition"
             >
-              logout
+              Logout
             </button>
           </>
         ) : (
           <>
-            <NavLink href="/login">login</NavLink>
-            <NavLink href="/register">register</NavLink>
+            <Link className="hover:text-blue-400 transition" href="/login">
+              Login
+            </Link>
+
+            <Link className="hover:text-blue-400 transition" href="/register">
+              Register
+            </Link>
           </>
         )}
       </div>

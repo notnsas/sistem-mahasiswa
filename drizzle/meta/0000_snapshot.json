@@ -1,11 +1,11 @@
 {
-  "id": "7d0d85e1-c100-42dd-9cbe-794879c68921",
+  "id": "6d062fe8-3a00-4d52-b9bf-7b12679d6822",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.notes": {
-      "name": "notes",
+    "public.students": {
+      "name": "students",
       "schema": "",
       "columns": {
         "id": {
@@ -14,24 +14,89 @@
           "primaryKey": true,
           "notNull": true
         },
-        "content": {
-          "name": "content",
+        "npm": {
+          "name": "npm",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "important": {
-          "name": "important",
-          "type": "boolean",
+        "nama": {
+          "name": "nama",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true,
-          "default": false
+          "notNull": true
+        },
+        "alamat": {
+          "name": "alamat",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "gender": {
+          "name": "gender",
+          "type": "gender",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "username": {
+          "name": "username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "password_hash": {
+          "name": "password_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
+        "token": {
+          "name": "token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "users_username_unique": {
+          "name": "users_username_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "username"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
