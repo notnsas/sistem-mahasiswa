@@ -4,6 +4,7 @@ import { eq } from "drizzle-orm"
 import bcrypt from "bcryptjs"
 import { db } from "./db"
 import { users } from "./db/schema"
+import { toRole } from "./types/role"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
@@ -39,7 +40,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           id: String(user.id),
           name: user.name,
           email: user.username,
-          role: user.role
+          role: user.role ?? "user",
         }
       },
     }),
@@ -53,12 +54,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role
+        token.role = toRole(user.role)
       }
       return token
     },
     async session({ session, token }) {
-      session.user.role = token.role as string
+      session.user.role = toRole(token.role)
       return session
     },
   },
