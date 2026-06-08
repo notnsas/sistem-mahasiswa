@@ -2,10 +2,9 @@ import { NextResponse } from "next/server"
 import { db } from "@/db"
 import { eq } from "drizzle-orm"
 import { students } from "@/db/schema"
-import type { NextApiRequest } from 'next'
 
 export const GET = async (
-  req: NextApiRequest,
+  _: Request,
   { params }: { params: Promise<{ id: number }> }
 ) => {
   console.log("GET request received with URL:", req.url)
