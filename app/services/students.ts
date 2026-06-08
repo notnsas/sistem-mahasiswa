@@ -14,6 +14,7 @@ export const getStudents = async () => {
 
 export const getStudentById = async (id: number) => {
   const result = await db.select().from(students).where(eq(students.id, id))
+  console.log('getStudentById result', result)
   return result[0]
 }
 
