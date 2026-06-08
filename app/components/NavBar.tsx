@@ -22,11 +22,14 @@ export default function NavBar() {
         <Link className={navLinkClass} href="/users">
           Users
         </Link>
+      
         {session && (
           <>
-            <Link className={navLinkClass} href="/students/new">
-              Create New
-            </Link>
+            {session.user?.role === "admin" && (
+              <Link className={navLinkClass} href="/students/new">
+                Create New
+              </Link>
+            )}
             <Link className={navLinkClass} href="/me">
               My Profile
             </Link>

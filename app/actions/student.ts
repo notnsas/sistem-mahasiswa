@@ -3,17 +3,19 @@
 import { redirect } from "next/navigation"
 import { revalidatePath } from "next/cache"
 // import { addNote, toggleImportance } from "../services/notes"
-import { addStudent } from "../services/students"
+import { addStudent, deleteStudent } from "../services/students"
 import { auth } from "../../auth"
 import { updateStudent } from "../services/students"
 import * as z from "zod";
+import { getCurrentUser } from "../services/session"
 
 export const createStudent = async (
   prevState: { error: string; success?: boolean },
   formData: FormData,
 ) => {
   const session = await auth()
-  if (!session) {
+  const user = await getCurrentUser()
+  if (!session || !user || user.role !== "admin") {
     redirect("/login")
   }
 
@@ -67,7 +69,8 @@ export const handleUpdateStudent = async (
   formData: FormData,
 ) => {
   const session = await auth()
-  if (!session) {
+  const user = await getCurrentUser()
+  if (!session || !user || user.role !== "admin") {
     redirect("/login")
   }
 
@@ -117,9 +120,16 @@ export const handleUpdateStudent = async (
   return { error: "", success: true }
 }
 
-// export const toggleNoteImportance = async (formData: FormData) => {
-//   const id = Number(formData.get("id"))
-//   await toggleImportance(id)
-//   revalidatePath(`/notes/${id}`)
-//   revalidatePath("/notes")
-// }
+export const handleDeleteStudent = async (
+  id: number
+) => {
+  const session = await auth()
+  const user = await getCurrentUser()
+  if (!session || !user || user.role !== "admin") {
+    redirect("/login")
+  }
+  await deleteStudent(id)
+
+  revalidatePath("/students")
+  return
+}

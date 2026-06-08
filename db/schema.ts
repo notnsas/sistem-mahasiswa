@@ -1,11 +1,14 @@
 import { pgTable, serial, text, pgEnum } from "drizzle-orm/pg-core"
 
+export const roleEnum = pgEnum('role', ['user', 'admin']);
+
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),
   name: text("name").notNull(),
   passwordHash: text("password_hash").notNull().default(""),
   token: text("token").default(""),
+  role: roleEnum("role").default("user"),
 })
 
 export const genderEnum = pgEnum('gender', ['Male', 'Female']);

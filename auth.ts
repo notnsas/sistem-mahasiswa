@@ -34,10 +34,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return null
         }
 
+        console.log('Authorized user buat role:', user)
         return {
           id: String(user.id),
           name: user.name,
           email: user.username,
+          role: user.role
         }
       },
     }),
@@ -47,5 +49,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   session: {
     strategy: "jwt",
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.role = user.role
+      }
+      return token
+    },
+    async session({ session, token }) {
+      session.user.role = token.role as string
+      return session
+    },
   },
 })

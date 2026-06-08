@@ -32,3 +32,12 @@ export const addStudent = async (name: string, npm: string, alamat: string, gend
   await db.insert(students).values({ name, npm, alamat, gender })
 }
 
+export const deleteStudent = async (id: number) => {
+  const user = await getCurrentUser()
+  if (!user) {
+    throw new Error("Not logged in")
+  }
+
+  await db.delete(students).where(eq(students.id, id))
+}
+

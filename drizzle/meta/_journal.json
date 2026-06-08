@@ -15,6 +15,13 @@
       "when": 1780928614206,
       "tag": "0001_plain_piledriver",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1780942367938,
+      "tag": "0002_jittery_the_executioner",
+      "breakpoints": true
     }
   ]
 }
