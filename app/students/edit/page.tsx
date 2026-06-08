@@ -26,15 +26,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-// export function SelectDemo() {
-//   return (
-    
-//   )
-// }
-
-const selectClassName =
-  "h-8 w-full min-w-0 rounded-lg border border-outline bg-transparent px-2.5 py-1 text-base transition-colors outline-none focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/30 md:text-sm"
-
 const EditStudent = () => {
   const searchParams = useSearchParams()
   const [student, setStudent] = useState<Student | null>(null)
@@ -93,10 +84,6 @@ const EditStudent = () => {
             </div>
             <div className="space-y-2">
               <Label htmlFor="gender">Gender</Label>
-              {/* <select id="gender" name="gender" className={selectClassName} defaultValue={student?.gender}>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select> */}
               {student && (
                 <Select name="gender" defaultValue={student.gender}>
                   <SelectTrigger className="w-full max-w-48">

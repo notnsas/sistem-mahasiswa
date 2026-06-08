@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import Link from "next/link"
 import { getUsers } from "../services/users"
 import {
@@ -7,10 +9,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { db } from "@/db"
 
 const Users = async () => {
   const users = await getUsers()
-
+  // const users = await db.query.users.findMany()
+  console.log("Fetched users:", users)
   return (
     <div className="space-y-6">
       <div>
