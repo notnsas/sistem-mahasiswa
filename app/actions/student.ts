@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache"
 import { addStudent } from "../services/students"
 import { auth } from "../../auth"
 import { updateStudent } from "../services/students"
+import * as z from "zod";
 
 export const createStudent = async (
   prevState: { error: string; success?: boolean },
@@ -53,7 +54,9 @@ export const createStudent = async (
     }
   }
 
-  await addStudent(name, npm, alamat, gender )
+  const safeGender = z.enum(["Male", "Female"]).parse(gender)
+
+  await addStudent(name, npm, alamat, safeGender )
 
   revalidatePath("/students")
   return { error: "", success: true }
@@ -106,7 +109,9 @@ export const handleUpdateStudent = async (
     }
   }
 
-  await updateStudent(Number(id), name, npm, alamat, gender )
+  const safeGender = z.enum(["Male", "Female"]).parse(gender)
+
+  await updateStudent(Number(id), name, npm, alamat, safeGender )
 
   revalidatePath("/students")
   return { error: "", success: true }

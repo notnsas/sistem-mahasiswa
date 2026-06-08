@@ -72,7 +72,7 @@ const NewStudent = () => {
                 <option value="Female">Female</option>
               </select> */}
 
-              <Select id="gender" name="gender">
+              <Select name="gender">
                 <SelectTrigger className="w-full max-w-48">
                   <SelectValue placeholder="Select a gender" />
                 </SelectTrigger>

@@ -4,7 +4,7 @@ import { getCurrentUser } from "@/app/services/session"
 import { headers } from 'next/headers'
 import { db } from "@/db"
 import { eq } from "drizzle-orm"
-import { users, blogs } from "@/db/schema"
+import { users } from "@/db/schema"
 
 export const GET = async () => {
   const headersList = await headers()

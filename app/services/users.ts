@@ -16,6 +16,7 @@ export const getUsers = async () => {
 // }
 
 export const getUserWithUsername = async (username: string) => {
+  console.log('getUserWithUsername called with username:', username)
   return db.query.users.findFirst({
     where: eq(users.username, username),
   })
